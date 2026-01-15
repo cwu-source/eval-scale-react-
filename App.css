@@ -1,95 +1,104 @@
-/* ================= VARIABLES ================= */
+/* ================= VARIABLES (延續上一頁的設定) ================= */
 :root {
     --color-bg: #f8f9fc;
+    --color-surface: #ffffff;
     --color-text-primary: #1a1f36;
-    --color-text-secondary: #4a5568;
-    --color-text-muted: #718096;
+    --color-text-secondary: #64748b;
     --color-accent-blue: #0066cc;
-    --color-accent-teal: #0d9488;
-    --color-glass-bg: #ffffff;
+    --color-border: #e2e8f0;
+    
+    --tag-purple-bg: #f3e8ff;
+    --tag-purple-text: #7e22ce;
+    --tag-orange-bg: #ffedd5;
+    --tag-orange-text: #c2410c;
+    --tag-blue-bg: #e0f2fe;
+    --tag-blue-text: #0284c7;
+
     --font-display: 'Instrument Serif', Georgia, serif;
     --font-body: 'DM Sans', -apple-system, sans-serif;
 }
 
-/* ================= RESET & BASIC ================= */
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html, body { height: 100%; }
-body { font-family: var(--font-body); background: var(--color-bg); color: var(--color-text-primary); line-height: 1.6; overflow-x: hidden; }
+body { background: var(--color-bg); font-family: var(--font-body); color: var(--color-text-primary); }
 
-/* 背景光暈 */
-.bg-gradient { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(at 50% 0%, #eef2ff 0%, transparent 70%); }
+/* ================= LAYOUT ================= */
+.dashboard-container { max-width: 1200px; margin: 0 auto; padding: 0 24px 60px; }
 
-/* ================= HEADER ================= */
-.container { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 24px; position: relative; }
-
-.header { text-align: center; margin-bottom: 60px; display: flex; flex-direction: column; align-items: center; }
-
-/* LOGO 區域 */
-.logo-container { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
-
-/* 畫出 EvalScale 旁的 Logo */
-.logo-box {
-    width: 48px; height: 48px;
-    background: linear-gradient(135deg, #0088cc, #0055aa);
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    color: white;
-    box-shadow: 0 4px 10px rgba(0, 85, 170, 0.2);
+/* ================= HEADER / NAVBAR ================= */
+.navbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px 0; margin-bottom: 40px;
 }
-.logo-box svg { width: 28px; height: 28px; fill: white; }
+.nav-left { display: flex; align-items: center; gap: 40px; }
+.logo-row { display: flex; align-items: center; gap: 10px; font-weight: 600; color: var(--color-text-primary); text-decoration: none; }
+.logo-box-sm { width: 32px; height: 32px; background: linear-gradient(135deg, #0088cc, #0055aa); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; }
+.logo-box-sm svg { width: 20px; height: 20px; fill: white; }
 
-.logo-text { font-family: var(--font-display); font-size: 2.5rem; color: var(--color-text-primary); letter-spacing: -0.01em; }
+.breadcrumbs { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: var(--color-text-secondary); }
+.breadcrumbs span { color: var(--color-text-primary); font-weight: 500; }
 
-/* Slogan 樣式 */
-.slogan { font-size: 1.125rem; color: var(--color-text-secondary); }
-.slogan em { 
-    font-style: italic; 
-    color: #0077dd; /* 讓 Trusted everywhere 變藍色 */
-    font-family: var(--font-display);
-    font-weight: 500;
+.user-avatar { width: 40px; height: 40px; background: #7c3aed; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.9rem; border: 2px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+
+/* ================= PAGE TITLE ================= */
+.page-header { margin-bottom: 32px; }
+.page-title { font-family: var(--font-display); font-size: 2.5rem; margin-bottom: 8px; font-weight: 400; }
+.page-subtitle { color: var(--color-text-secondary); font-size: 1rem; }
+
+/* ================= TABS ================= */
+.tabs { display: flex; gap: 16px; margin-bottom: 32px; }
+.tab-btn {
+    padding: 10px 20px; border-radius: 30px; border: none; font-size: 0.95rem; font-weight: 500;
+    cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.2s;
 }
+.tab-btn.active { background: white; border: 2px solid var(--color-accent-blue); color: var(--color-accent-blue); box-shadow: 0 4px 12px rgba(0, 102, 204, 0.08); }
+.tab-btn.inactive { background: transparent; color: var(--color-text-secondary); border: 2px solid transparent; }
+.tab-btn:hover { background: rgba(255,255,255,0.5); }
+.badge { background: var(--color-accent-blue); color: white; font-size: 0.75rem; padding: 2px 8px; border-radius: 10px; min-width: 20px; text-align: center; }
+.tab-btn.inactive .badge { background: #cbd5e1; color: #64748b; }
 
-/* ================= CARDS ================= */
-.cards-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 1000px; width: 100%; }
-@media (max-width: 900px) { .cards-container { grid-template-columns: 1fr; max-width: 380px; } }
+/* ================= GRID SYSTEM ================= */
+.model-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+@media (max-width: 1024px) { .model-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .model-grid { grid-template-columns: 1fr; } }
 
-.card {
-    background: var(--color-glass-bg); 
-    border-radius: 24px; padding: 48px 32px; text-align: center;
-    cursor: pointer; transition: all 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.02), 0 10px 30px rgba(0,0,0,0.04);
-    display: flex; flex-direction: column; align-items: center;
-    height: 100%;
+/* ================= MODEL CARD ================= */
+.model-card {
+    background: var(--color-surface); border-radius: 20px; padding: 24px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02), 0 10px 20px rgba(0,0,0,0.04);
+    transition: transform 0.2s ease, box-shadow 0.2s ease; border: 1px solid transparent;
 }
+.model-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); border-color: #e0f2fe; }
 
-.card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+/* Card Header */
+.card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+.card-title { font-family: var(--font-display); font-size: 1.5rem; font-weight: 500; color: var(--color-text-primary); }
 
-/* Icon 容器 */
-.card-icon { 
-    width: 64px; height: 64px; margin-bottom: 24px; 
-    background: #eaebf0; /* 淺灰色背景 */
-    border-radius: 16px; 
-    display: flex; align-items: center; justify-content: center; 
-    transition: all 0.3s ease;
-}
-.card-icon svg { width: 32px; height: 32px; fill: #64748b; } /* 預設深灰圖標 */
+/* Status Tags */
+.status-tag { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; padding: 6px 12px; border-radius: 8px; letter-spacing: 0.05em; }
+.status-review { background: var(--tag-purple-bg); color: var(--tag-purple-text); }
+.status-pending { background: var(--tag-orange-bg); color: var(--tag-orange-text); }
 
-/* Hover 時 Icon 變色 */
-.card:hover .card-icon { background: #0066cc; }
-.card:hover .card-icon svg { fill: white; }
+/* Version & Desc */
+.version-row { display: flex; align-items: center; gap: 8px; margin-bottom: 24px; }
+.version-badge { background: var(--tag-blue-bg); color: var(--tag-blue-text); font-size: 0.8rem; font-weight: 600; padding: 4px 8px; border-radius: 6px; }
+.card-desc { color: var(--color-text-secondary); font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-.card-title { font-family: var(--font-display); font-size: 1.5rem; margin-bottom: 16px; color: var(--color-text-primary); font-weight: 400; }
-.card-desc { font-size: 0.95rem; color: var(--color-text-secondary); line-height: 1.6; margin-bottom: 32px; flex-grow: 1; }
+/* Metrics Area (Donut + List) */
+.metrics-container { display: flex; align-items: center; gap: 20px; border-top: 1px solid var(--color-border); padding-top: 20px; }
 
-.card-cta { font-size: 0.9rem; font-weight: 600; color: var(--color-text-primary); display: flex; align-items: center; gap: 6px; opacity: 0.8; transition: opacity 0.3s; }
-.card:hover .card-cta { opacity: 1; color: var(--color-accent-blue); }
+/* Donut Chart */
+.donut-chart { position: relative; width: 80px; height: 80px; }
+.donut-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; }
+.donut-percent { font-size: 1.1rem; font-weight: 700; line-height: 1; color: var(--color-text-primary); }
+.donut-label { font-size: 0.55rem; color: var(--color-text-secondary); font-weight: 600; margin-top: 2px; text-transform: uppercase; }
+svg.circle-chart { transform: rotate(-90deg); width: 80px; height: 80px; }
+.circle-bg { fill: none; stroke: #f1f5f9; stroke-width: 2.5; }
+.circle-progress { fill: none; stroke-width: 2.5; stroke-linecap: round; transition: stroke-dasharray 1s ease; }
 
-/* ================= FOOTER ================= */
-.footer { margin-top: 80px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 12px; }
-.footer-text { font-size: 0.85rem; color: #94a3b8; }
-.compliance-badge {
-    background: #e0f2fe; color: #0284c7;
-    padding: 6px 16px; border-radius: 20px;
-    font-size: 0.75rem; font-weight: 600;
-    display: inline-flex; align-items: center; gap: 6px;
-}
+/* Status List */
+.status-list { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+.status-item { display: flex; justify-content: space-between; font-size: 0.8rem; }
+.status-label { color: var(--color-text-secondary); }
+.status-val { font-weight: 600; }
+.text-green { color: #10b981; }
+.text-orange { color: #f59e0b; }
+.text-blue { color: #0284c7; }
