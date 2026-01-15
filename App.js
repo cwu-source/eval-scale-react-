@@ -44,9 +44,9 @@ const App = () => {
     }, []);
 
     const cardsData = [
-        { id: 'dev', title: 'Model Developer', desc: 'Build and validate AI models. Track bias metrics.', icon: <IconDev /> },
-        { id: 'hosp', title: 'Hospital Mgmt', desc: 'Monitor deployment and clinical workflows.', icon: <IconHosp /> },
-        { id: 'admin', title: 'Platform Admin', desc: 'System monitoring and audit logs.', icon: <IconAdmin /> },
+        { id: 'dev', title: 'Model Developer', desc: 'Build, validate, and monitor AI models. Track FDA readiness, analyze bias metrics, and manage model lifecycle.', icon: <IconDev /> },
+        { id: 'hosp', title: 'Hospital Management', desc: 'Monitor deployment performance, manage infrastructure, and track clinical workflow integration across sites.', icon: <IconHosp /> },
+        { id: 'admin', title: 'Platform Admin', desc: 'System-wide monitoring, audit logs, API health, and ROI analytics. Full control over the evaluation platform.', icon: <IconAdmin /> },
     ];
 
     return (
@@ -65,7 +65,7 @@ const App = () => {
 
                 <header className="header">
                     <div className="logo-text">EvalScale</div>
-                    <p className="slogan">Select your role to continue</p>
+                    <p className="slogan">Evaluated here. Trusted everywhere.</p>
                 </header>
 
                 <div className="cards-container">
